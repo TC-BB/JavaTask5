@@ -35,24 +35,23 @@ class InjectorTest {
     @Test
     void testInjectionWithOtherImpl() throws IOException {
         modifyConfig("com.example.interfaces.SomeInterface", OtherImpl.class.getName());
-        SomeBean sb = new Injector().inject(new SomeBean(), configFilePath.toString()); // Передаем путь к файлу
+        SomeBean sb = new Injector().inject(new SomeBean(), configFilePath.toString()); 
         sb.foo(); // Output should be BC
     }
 
     @Test
     void testInjectionWithMissingImplementation() throws IOException {
         modifyConfig("com.example.interfaces.SomeInterface", null);
-        assertThrows(RuntimeException.class, () -> new Injector().inject(new SomeBean(), configFilePath.toString())); // Передаем путь к файлу
+        assertThrows(RuntimeException.class, () -> new Injector().inject(new SomeBean(), configFilePath.toString())); 
     }
 
 
     @Test
     void testInjectionWithInvalidClassName() throws IOException {
         modifyConfig("com.example.interfaces.SomeInterface", "com.example.NonExistentClass");
-        assertThrows(RuntimeException.class, () -> new Injector().inject(new SomeBean(), configFilePath.toString())); // Передаем путь к файлу
+        assertThrows(RuntimeException.class, () -> new Injector().inject(new SomeBean(), configFilePath.toString())); 
     }
 
-    // Этот тест теперь работает корректно, т.к. используется временный файл
     @Test
     void testInjectionWithNoPropertiesFile() {
         assertThrows(RuntimeException.class, () -> new Injector().inject(new SomeBean(), "nonexistent_file.properties"));
@@ -77,6 +76,5 @@ class InjectorTest {
 
     @AfterEach
     void tearDown() {
-        // Временный каталог удаляется автоматически после теста
     }
 }
